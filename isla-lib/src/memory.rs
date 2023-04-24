@@ -148,7 +148,7 @@ impl<B> Region<B> {
         }
     }
 
-    fn region_range(&self) -> &Range<Address> {
+    pub fn region_range(&self) -> &Range<Address> {
         match self {
             Region::Constrained(r, _) => r,
             Region::Symbolic(r) => r,
@@ -239,6 +239,10 @@ static DEFAULT_REGION_NAME: &str = "default";
 impl<B: BV> Memory<B> {
     pub fn new() -> Self {
         Memory { regions: Vec::new(), client_info: None }
+    }
+
+    pub fn regions(&self) -> &[Region<B>] {
+        &self.regions
     }
 
     pub fn region_name_at(&self, addr: Address) -> &'static str {
